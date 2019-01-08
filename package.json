@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/vadymvoitko/Movies_Vuex_Vuetify_/issues"
   },
-  "homepage": "https://github.com/vadymvoitko/Movies_Vuex_Vuetify_#readme"
+  "homepage": "https://github.com/vadymvoitko/Movies_Vuex_Vuetify_#readme",
+  "dependencies": {
+    "@vue/cli": "^3.3.0",
+    "vue": "^2.5.21"
+  }
 }
