@@ -10,23 +10,31 @@
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
-          </v-list-tile-content>
+          <router-link class="side-link" to="/favourites">
+            <v-list-tile-content>
+                Favourite
+            </v-list-tile-content>
+          </router-link>
         </v-list-tile>
         <v-list-tile @click="">
           <v-list-tile-action>
             <v-icon>contact_mail</v-icon>
           </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Contact</v-list-tile-title>
-          </v-list-tile-content>
+          <router-link class="side-link" to="/popular">
+            <v-list-tile-content>
+                Popular
+            </v-list-tile-content>
+          </router-link>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar dense>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Title</v-toolbar-title>
+      <v-toolbar-title>
+        <router-link to="/">
+          Main
+        </router-link>
+      </v-toolbar-title>
       <v-btn icon>
         <v-icon>search</v-icon>
       </v-btn>
@@ -39,7 +47,8 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      Our content {{ $store.getters.getTest }}
+      <router-view/>
+      {{ $store.getters.getPopularMovies }}
     </v-content>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2019</span>
@@ -56,7 +65,19 @@
       source: String
     },
     created() {
-      console.log(this.$store.getters)
+      this.$store.dispatch('fetchPopularMovies')
+      console.log()
     }
   }
 </script>
+
+<style>
+  a {
+    text-decoration: none;
+    color: black !important;
+  }
+
+  .side-link {
+    width: 100%;
+  }
+</style>
