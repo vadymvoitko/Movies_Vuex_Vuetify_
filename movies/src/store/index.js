@@ -12,7 +12,10 @@ const store = new Vuex.Store({
   },
   getters: {
     getPopularMovies({popularMovies}) {
-      return popularMovies
+      const sortedArray = [...popularMovies]
+      return sortedArray.sort((a, b) =>
+        b.popularity - a.popularity
+      )
     }
   },
   actions: {

@@ -1,7 +1,8 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" light>
     <v-navigation-drawer
       v-model="drawer"
+      clipped
       fixed
       app
     >
@@ -28,7 +29,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar dense>
+    <v-toolbar dense class="main-toolbar">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>
         <router-link to="/">
@@ -48,7 +49,6 @@
     </v-toolbar>
     <v-content>
       <router-view/>
-      {{ $store.getters.getPopularMovies }}
     </v-content>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2019</span>
@@ -59,7 +59,7 @@
 <script>
   export default {
     data: () => ({
-      drawer: null
+      drawer: true
     }),
     props: {
       source: String
