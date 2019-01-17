@@ -2,9 +2,9 @@
   <v-app id="inspire" light>
     <v-navigation-drawer
       v-model="drawer"
-      clipped
       fixed
       app
+      mobile-break-point="0"
     >
       <v-list dense>
         <v-list-tile @click="">
@@ -29,7 +29,11 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar dense class="main-toolbar">
+    <v-toolbar 
+      dense 
+      class="main-toolbar"
+      app
+    >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>
         <router-link to="/">
@@ -59,7 +63,7 @@
 <script>
   export default {
     data: () => ({
-      drawer: true
+      drawer: false
     }),
     props: {
       source: String

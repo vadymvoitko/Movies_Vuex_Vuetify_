@@ -1,6 +1,6 @@
 <template>
-<div>
-  <div class="text-xs-center">
+<v-container>
+  <div class="text-xs-center popular-pagination">
     <v-pagination
       v-model="page"
       :length="6"
@@ -8,6 +8,7 @@
   </div>
   <v-layout wrap row>
     <v-flex 
+      class="popular-card"
       xs3
       offset-xs1
       v-for="movie in getSixMovies"
@@ -39,11 +40,11 @@
       </v-card>
     </v-flex>
   </v-layout>
-</div>
+</v-container>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 import { setTimeout } from 'timers';
 
 export default {
@@ -74,6 +75,12 @@ export default {
 </script>
 
 <style>
-  
+  .popular-pagination {
+    padding: 10px 0;
+  }
+
+  .popular-card {
+    margin: 10px 0;
+  }
 </style>
 
