@@ -18,7 +18,7 @@
         <v-img
           class="white--text"
           height="200px"
-          :src="imgSlug + movie.backdrop_path"
+          :src="imgSlug + movie.poster_path"
         >
           <v-container fill-height fluid>
             <v-layout fill-height>
@@ -35,7 +35,24 @@
         </v-card-title>
         <v-card-actions>
           <v-btn flat color="orange">Share</v-btn>
-          <v-btn flat color="orange">Explore</v-btn>
+          <v-btn 
+            flat 
+            color="orange"
+            :to="{
+              name: 'MovieDetails', 
+              params: {
+                title: movie.title.toLowerCase(),
+                image: movie.backdrop_path,
+                original_language: movie.original_language,
+                overview: movie.overview,
+                release_date: movie.release_date,
+                vote_average: movie.vote_average,
+                vote_count: movie.vote_count
+              }
+              }"
+          >
+            Explore
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
