@@ -1,31 +1,37 @@
 <template>
   <div>
-    <v-layout>
+    <v-layout v-if="getMovieByTitle">
       <v-flex xs10 offset-xs1>
         <v-card>
         <v-img
-          v-if="$route.params.image"
-          :src="imgSlug + $route.params.image"
+          v-if="getMovieByTitle.backdrop_path"
+          :src="imgSlug + getMovieByTitle.backdrop_path"
           aspect-ratio="2.75"
         ></v-img>
+
+        <div class="movie__content" v-for="item in items" :key="item.id">
+          <h1>{{ item.title }}:</h1><span class="movie__content__text">{{ getMovieByTitle[item.value] }}</span>
+        </div>
+
         <div class="movie__content">
-          <h1>Title:</h1><span class="movie__content__text">{{ $route.params.title }}</span>
+          <h1>Title:</h1><span class="movie__content__text">{{ getMovieByTitle.title }}</span>
         </div>
         <div class="movie__content">
-          <h1>Description:</h1><span class="movie__content__text">{{ $route.params.overview }}</span>
+          <h1>Description:</h1><span class="movie__content__text">{{ getMovieByTitle.overview }}</span>
         </div>
         <div class="movie__content">
-          <h1>Release Date:</h1><span class="movie__content__text">{{ $route.params.release_date }}</span>
+          <h1>Release Date:</h1><span class="movie__content__text">{{ getMovieByTitle.release_date }}</span>
         </div>
         <div class="movie__content">
-          <h1>Original Language:</h1><span class="movie__content__text">{{ $route.params.original_language }}</span>
+          <h1>Original Language:</h1><span class="movie__content__text">{{ getMovieByTitle.original_language }}</span>
         </div>
         <div class="movie__content">
-          <h1>Average Rate:</h1><span class="movie__content__text">{{ $route.params.vote_average }}</span>
+          <h1>Average Rate:</h1><span class="movie__content__text">{{ getMovieByTitle.vote_average }}</span>
         </div>
         <div class="movie__content">
-          <h1>Rate Count:</h1><span class="movie__content__text">{{ $route.params.vote_count }}</span>
+          <h1>Rate Count:</h1><span class="movie__content__text">{{ getMovieByTitle.vote_count }}</span>
         </div>
+
       </v-card>
       </v-flex>
     </v-layout>
@@ -33,13 +39,24 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: 'MovieDetails',
   data() {
     return {
-      imgSlug: 'https://image.tmdb.org/t/p/w500'
+      imgSlug: 'https://image.tmdb.org/t/p/w500',
+      items: [{title: "Title", value: 'title'}, {title: "Description", value: 'overview'}]
     }
-  }
+  },
+  computed: {
+    ...mapGetters(['getPopularMovies']),
+    getMovieByTitle() {
+      const title = this.$route.params.title;
+      return this.getPopularMovies.filter(
+        item => item.title.toLowerCase() === title.toLowerCase()
+        )[0]
+    }
+  },
 }
 </script>
 
