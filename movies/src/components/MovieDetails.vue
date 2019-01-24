@@ -8,30 +8,9 @@
           :src="imgSlug + getMovieByTitle.backdrop_path"
           aspect-ratio="2.75"
         ></v-img>
-
         <div class="movie__content" v-for="item in items" :key="item.id">
           <h1>{{ item.title }}:</h1><span class="movie__content__text">{{ getMovieByTitle[item.value] }}</span>
         </div>
-
-        <div class="movie__content">
-          <h1>Title:</h1><span class="movie__content__text">{{ getMovieByTitle.title }}</span>
-        </div>
-        <div class="movie__content">
-          <h1>Description:</h1><span class="movie__content__text">{{ getMovieByTitle.overview }}</span>
-        </div>
-        <div class="movie__content">
-          <h1>Release Date:</h1><span class="movie__content__text">{{ getMovieByTitle.release_date }}</span>
-        </div>
-        <div class="movie__content">
-          <h1>Original Language:</h1><span class="movie__content__text">{{ getMovieByTitle.original_language }}</span>
-        </div>
-        <div class="movie__content">
-          <h1>Average Rate:</h1><span class="movie__content__text">{{ getMovieByTitle.vote_average }}</span>
-        </div>
-        <div class="movie__content">
-          <h1>Rate Count:</h1><span class="movie__content__text">{{ getMovieByTitle.vote_count }}</span>
-        </div>
-
       </v-card>
       </v-flex>
     </v-layout>
@@ -45,8 +24,14 @@ export default {
   data() {
     return {
       imgSlug: 'https://image.tmdb.org/t/p/w500',
-      items: [{title: "Title", value: 'title'}, {title: "Description", value: 'overview'}]
-    }
+      items: [
+        {title: "Title", value: 'title'}, 
+        {title: "Description", value: 'overview'}, 
+        {title: "Release Date", value: "release_date"}, 
+        {title: "Original Language", value: "original_language"}, 
+        {title: "Average Rate", value: "vote_average"}, 
+        {title: "Rate Count", value: "vote_count"}
+      ]}
   },
   computed: {
     ...mapGetters(['getPopularMovies']),

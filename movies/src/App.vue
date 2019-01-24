@@ -1,11 +1,6 @@
 <template>
   <v-app id="inspire" light>
-    <v-navigation-drawer
-      v-model="drawer"
-      fixed
-      app
-      mobile-break-point="0"
-    >
+    <v-navigation-drawer v-model="drawer" fixed app mobile-break-point="0">
       <v-list dense>
         <v-list-tile @click="">
           <v-list-tile-action>
@@ -13,7 +8,7 @@
           </v-list-tile-action>
           <router-link class="side-link" to="/favourites">
             <v-list-tile-content>
-                Favourite
+              Favourite
             </v-list-tile-content>
           </router-link>
         </v-list-tile>
@@ -23,26 +18,28 @@
           </v-list-tile-action>
           <router-link class="side-link" to="/popular">
             <v-list-tile-content>
-                Popular
+              Popular
             </v-list-tile-content>
           </router-link>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar 
-      dense 
-      class="main-toolbar"
-      app
-    >
+    <v-toolbar dense class="main-toolbar" app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>
         <router-link to="/">
           Main
         </router-link>
       </v-toolbar-title>
-      <v-btn icon>
+      <v-btn icon @click="showSearch = !showSearch">
         <v-icon>search</v-icon>
       </v-btn>
+      <!-- <input type="text" class="main-search" placeholder="start typing" oninput="performSearch"> -->
+      <transition name="fade">
+        <v-flex xs2 v-if="showSearch" class="main-search" placeholder="start typing">
+          <v-text-field @input="handleSearch" label="Regular"></v-text-field>
+        </v-flex>
+      </transition>
       <v-btn icon>
         <v-icon>favorite</v-icon>
       </v-btn>
@@ -52,7 +49,7 @@
       </v-btn>
     </v-toolbar>
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
     <v-footer color="indigo" app>
       <span class="white--text">&copy; 2019</span>
@@ -63,14 +60,26 @@
 <script>
   export default {
     data: () => ({
-      drawer: false
+      drawer: false,
+      showSearch: false
     }),
     props: {
       source: String
     },
+    methods: {
+      handleSearch(event) {
+        console.log('test')
+        this.$store.dispatch('setSearchMovies', event)
+      }
+    },
     created() {
       this.$store.dispatch('fetchPopularMovies')
-      console.log()
+      console.log('value= ', localStorage.getItem('test'))
+      localStorage.setItem('test', true);
+      setTimeout(() => {
+        console.log('time')
+        localStorage.setItem('test', true);
+      }, 30000)
     }
   }
 </script>
@@ -80,8 +89,27 @@
     text-decoration: none;
     color: black !important;
   }
-
+  
   .side-link {
+    width: 100%;
+  }
+  
+  .main-search {
+    transition: 1s all ease-in-out;
+  }
+  
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all .5s;
+  }
+  
+  .fade-enter,
+  .fade-leave-to {
+    width: 0;
+  }
+  
+  .fade-enter-to,
+  .fade-leave {
     width: 100%;
   }
 </style>

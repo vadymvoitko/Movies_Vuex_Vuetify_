@@ -8,30 +8,42 @@ const store = new Vuex.Store({
   state: {
     slug: 'https://api.themoviedb.org/3/movie/popular',
     key: 'api_key=777de1c0359913997a49b6a6fc4096fe',
-    popularMovies: []
+    options: {
+      params: {
+        api_key: '777de1c0359913997a49b6a6fc4096fe'
+      }
+    },
+    popularMovies: [],
+    popularSearch: []
   },
   getters: {
-    getPopularMovies({popularMovies}) {
-      const sortedArray = [...popularMovies]
-      return sortedArray.sort((a, b) =>
-        b.popularity - a.popularity
-      )
+    getPopularMovies({popularSearch}) {
+      return popularSearch
     }
   },
   actions: {
     fetchPopularMovies ({ commit }) {
-      axios.get(`${this.state.slug}?${this.state.key}`)
+      axios.get(this.state.slug, this.state.options)
       .then(res => {
-        console.log(res);
-        commit('setPopularMovies', res.data.results)
+        commit('setPopularMovies', res.data.results);
       })
       .catch(err => console.log('Request failed: ' + err.response.statusText))
+    },
+    setSearchMovies({ commit, state }, searchWord){
+      // your code here
+      const search = state.popularMovies.filter(
+        item => item.title.toLowerCase().includes(searchWord.toLowerCase())
+      );
+      commit('setSearchMovies', search)
     }
   },
   mutations: {
     setPopularMovies(state, payload) {
-      console.log('test')
-      state.popularMovies = [...payload]
+      state.popularMovies = [...payload];
+      state.popularSearch = [...payload];
+    },
+    setSearchMovies(state, payload) {
+      state.popularSearch = [...payload]
     }
   }
 })
