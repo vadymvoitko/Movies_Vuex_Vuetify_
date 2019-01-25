@@ -34,20 +34,17 @@
           </div>
         </v-card-title>
         <v-card-actions>
-          <v-btn flat color="orange">Share</v-btn>
+          <v-checkbox 
+            label="Add to favourite" 
+            @change="addToFavourites($event, movie.id)"
+          />
           <v-btn 
             flat 
             color="orange"
             :to="{
               name: 'MovieDetails', 
               params: {
-                title: movie.title.toLowerCase(),
-                image: movie.backdrop_path,
-                original_language: movie.original_language,
-                overview: movie.overview,
-                release_date: movie.release_date,
-                vote_average: movie.vote_average,
-                vote_count: movie.vote_count
+                title: movie.title.toLowerCase()
               }
               }"
           >
@@ -57,6 +54,7 @@
       </v-card>
     </v-flex>
   </v-layout>
+  {{ $_Cookie.get('favourites') }}
 </v-container>
 </template>
 
@@ -68,7 +66,7 @@ export default {
   data() {
     return {
       imgSlug: 'https://image.tmdb.org/t/p/w500',
-      page: 1
+      page: 1,
     }
   },
   computed: {
@@ -82,6 +80,20 @@ export default {
   watch: {
     getPopularMovies() {
       console.log('getterW ', this.getPopularMovies)
+    }
+  },
+  methods: {
+    addToFavourites(event, id) {
+      let favourites = Cookie.get('favourites') || [];
+      if (!Array.isArray(favourites)) {
+        favourites = JSON.parse(favourites);
+      }
+      if (event) {
+        !~favourites.indexOf(id) && favourites.push(id)
+      } else {
+        favourites.splice( favourites.indexOf(id), ~favourites.indexOf(id) ? 1 : 0)
+      }
+      Cookie.set('favourites', favourites)
     }
   },
   created() {

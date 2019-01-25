@@ -74,12 +74,6 @@
     },
     created() {
       this.$store.dispatch('fetchPopularMovies')
-      console.log('value= ', localStorage.getItem('test'))
-      localStorage.setItem('test', true);
-      setTimeout(() => {
-        console.log('time')
-        localStorage.setItem('test', true);
-      }, 30000)
     }
   }
 </script>
