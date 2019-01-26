@@ -6,15 +6,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    slug: 'https://api.themoviedb.org/3/movie/popular',
-    key: 'api_key=777de1c0359913997a49b6a6fc4096fe',
-    options: {
+    popularMovies: [],
+    popularSearch: [],
+    ax: axios.create({
+      baseURL: 'https://api.themoviedb.org/3/movie/popular',
+      timeout: 1000,
       params: {
         api_key: '777de1c0359913997a49b6a6fc4096fe'
       }
-    },
-    popularMovies: [],
-    popularSearch: []
+    })
   },
   getters: {
     getPopularMovies({popularSearch}) {
@@ -22,8 +22,8 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    fetchPopularMovies ({ commit }) {
-      axios.get(this.state.slug, this.state.options)
+    fetchPopularMovies ({ commit, state: {ax} }) {
+      ax.get()
       .then(res => {
         commit('setPopularMovies', res.data.results);
       })
