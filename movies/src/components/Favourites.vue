@@ -1,0 +1,110 @@
+<template>
+<v-container>
+  <div class="text-xs-center popular-pagination">
+    <v-pagination
+      v-model="page"
+      :length="6"
+    ></v-pagination>
+  </div>
+  <v-layout wrap row>
+    <v-flex 
+      class="popular-card"
+      xs3
+      offset-xs1
+      v-for="movie in getFavourites"
+      :key="movie.id"
+    >
+      <v-card>
+        <v-img
+          class="white--text"
+          height="200px"
+          :src="imgSlug + movie.poster_path"
+        >
+          <v-container fill-height fluid>
+            <v-layout fill-height>
+              <v-flex xs12 align-end flexbox>
+                <span class="headline">Popularity: {{ movie.popularity }}</span>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-img>
+        <v-card-title>
+          <div>
+            <span class="grey--text">{{ movie.title }}</span>
+          </div>
+        </v-card-title>
+        <v-card-actions>
+          <!-- <v-checkbox 
+            label="Add to favourite" 
+            @change="addToFavourites($event, movie.id)"
+          /> -->
+          <input
+            type="checkbox"
+            :checked="checkFavourite(movie.id)"
+            @change="addToFavourites($event, movie.id)"
+          >
+          <v-btn 
+            flat 
+            color="orange"
+            :to="{
+              name: 'MovieDetails', 
+              params: {
+                title: movie.title.toLowerCase()
+              }
+              }"
+          >
+            Explore
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
+  </v-layout>
+</v-container>
+</template>
+
+<script>
+import { mapGetters } from 'vuex';
+import favourites from './mixins/favourites.js';
+
+export default {
+  name: 'Favourites',
+  data() {
+    return {
+      getFavourites: [],
+      favouritesIds: [],
+      page: 1,
+      imgSlug: 'https://image.tmdb.org/t/p/w500'
+    }
+  },
+  methods: {
+    filterMovies() {
+      this.getFavourites = this.getPopularMovies.filter(item => this.favouritesIds.includes(item.id));
+    }
+  },
+  mixins: [favourites],
+  computed: {
+    ...mapGetters(['getPopularMovies', 'getMovieById'])
+  },
+  watch: {
+    getPopularMovies() {
+      this.filterMovies()
+    }
+  },
+  created() {
+    this.favouritesIds = Cookie.get('favourites') && JSON.parse(Cookie.get('favourites'));
+    this.filterMovies();
+    // filter array of all movies and write it in getFavourites
+  }
+}
+</script>
+
+<style>
+  .popular-pagination {
+    padding: 10px 0;
+  }
+
+  .popular-card {
+    margin: 10px 0;
+  }
+</style>
+

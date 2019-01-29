@@ -19,6 +19,12 @@ const store = new Vuex.Store({
   getters: {
     getPopularMovies({popularSearch}) {
       return popularSearch
+    },
+    getMovieById({popularMovies}) {
+      const getId = id => {
+        return popularMovies.filter(item => item.id == id)
+      }
+      return getId
     }
   },
   actions: {
