@@ -34,15 +34,12 @@
           </div>
         </v-card-title>
         <v-card-actions>
-          <!-- <v-checkbox 
-            label="Add to favourite" 
-            @change="addToFavourites($event, movie.id)"
-          /> -->
-          <input
-            type="checkbox"
-            :checked="checkFavourite(movie.id)"
-            @change="addToFavourites($event, movie.id)"
-          >
+          <v-checkbox 
+              label="Add to favourite"
+              :input-value="checkFavourite(movie.id)"
+              color='primary'
+              @change="addToFavourites($event, movie.id)"
+            />
           <v-btn 
             flat 
             color="orange"

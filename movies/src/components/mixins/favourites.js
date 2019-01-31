@@ -5,8 +5,7 @@ export default {
         if (!Array.isArray(favourites)) {
           favourites = JSON.parse(favourites);
         }
-        console.log('ev ', event.target.checked)
-        if (event.target.checked) {
+        if (event) {
           !~favourites.indexOf(id) && favourites.push(id)
         } else {
           favourites.splice(favourites.indexOf(id), ~favourites.indexOf(id) ? 1 : 0)
@@ -14,7 +13,6 @@ export default {
         Cookie.set('favourites', favourites)
       },
       checkFavourite(id) {
-        console.log('12 ', id)
         return !!this.favouritesIds.includes(id)
       }
   }
