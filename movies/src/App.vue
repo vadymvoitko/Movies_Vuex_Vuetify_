@@ -44,9 +44,12 @@
         <v-icon>favorite</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>more_vert</v-icon>
+      <v-btn @click="logout" v-if="isLoggedIn">
+        {{ isLoggedIn }}
       </v-btn>
+      <router-link v-else to="/login">
+        Login
+      </router-link>
     </v-toolbar>
     <v-content>
       <router-view />
@@ -58,6 +61,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
   export default {
     data: () => ({
       drawer: false,
@@ -66,14 +70,30 @@
     props: {
       source: String
     },
+    computed: {
+      isLoggedIn() {
+        const login = this.$store.getters.getLoggedIn;
+        console.log(login);
+        return firebase.auth().currentUser ? firebase.auth().currentUser.email : null
+      }
+    },
     methods: {
       handleSearch(event) {
         console.log('test')
         this.$store.dispatch('setSearchMovies', event)
+      },
+      logout() {
+        firebase.auth().signOut().then(res => {
+          this.$router.push('/');
+          this.$store.commit('Login');
+        })
       }
     },
     created() {
       this.$store.dispatch('fetchPopularMovies')
+      firebase.auth().onAuthStateChanged(function(user) {
+        console.log('user ', user)
+      });
     }
   }
 </script>

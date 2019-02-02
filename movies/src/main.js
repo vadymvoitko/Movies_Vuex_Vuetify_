@@ -9,6 +9,7 @@ Vue.config.productionTip = false
 window.Cookie = window.Cookie || Cookie;
 Vue.prototype.$_Cookie = Cookie;
 
+
 new Vue({
   render: h => h(App),
   store,
