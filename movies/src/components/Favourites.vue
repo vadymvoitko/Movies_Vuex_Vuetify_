@@ -11,7 +11,7 @@
       class="popular-card"
       xs3
       offset-xs1
-      v-for="movie in getFavourites"
+      v-for="movie in getFavourites.movies"
       :key="movie.id"
     >
       <v-card>
@@ -67,7 +67,18 @@ export default {
   name: 'Favourites',
   data() {
     return {
-      getFavourites: [],
+      getFavourites: {
+        allMovies: [],
+        get movies() {
+          console.log(this)
+          return this.allMovies
+        },
+        set movies(val) {
+          console.log('val ', val)
+          this.allMovies = [...val]
+          console.log('val2 ', this.allMovies)
+        }
+      },
       favouritesIds: [],
       page: 1,
       imgSlug: 'https://image.tmdb.org/t/p/w500'
@@ -75,7 +86,8 @@ export default {
   },
   methods: {
     filterMovies() {
-      this.getFavourites = this.getPopularMovies.filter(item => this.favouritesIds.includes(item.id));
+      console.log('ff')
+      this.getFavourites.movies = this.getPopularMovies.filter(item => this.favouritesIds.includes(item.id));
     }
   },
   mixins: [favourites],

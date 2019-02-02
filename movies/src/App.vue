@@ -44,8 +44,8 @@
         <v-icon>favorite</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn @click="logout" v-if="isLoggedIn">
-        {{ isLoggedIn }}
+      <v-btn @click="logout" v-if="currentUser">
+        {{ currentUser }}
       </v-btn>
       <router-link v-else to="/login">
         Login
@@ -71,10 +71,9 @@ import firebase from 'firebase'
       source: String
     },
     computed: {
-      isLoggedIn() {
-        const login = this.$store.getters.getLoggedIn;
-        console.log(login);
-        return firebase.auth().currentUser ? firebase.auth().currentUser.email : null
+      currentUser() {
+        const userEmail = this.$store.getters.getCurrentUser;
+        return userEmail
       }
     },
     methods: {
@@ -85,7 +84,7 @@ import firebase from 'firebase'
       logout() {
         firebase.auth().signOut().then(res => {
           this.$router.push('/');
-          this.$store.commit('Login');
+          this.$store.commit('Login', '');
         })
       }
     },

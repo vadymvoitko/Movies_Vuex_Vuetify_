@@ -35,8 +35,8 @@ export default {
       .auth()
       .signInWithEmailAndPassword(this.email, this.password)
       .then(res => {
-          this.$store.commit('Login')
-          console.log(firebase.auth().currentUser.email)
+          this.$store.commit('Login', firebase.auth().currentUser.email)
+          // console.log(firebase.auth().currentUser.email)
         })
       .catch(function(error) {
         console.log(error)
@@ -47,7 +47,7 @@ export default {
     firebase.auth().onAuthStateChanged(function(user) {
         console.log('user ', user)
       });
-    console.log(firebase.auth().currentUser)
+    // console.log(firebase.auth().currentUser)
   }
 }
 </script>

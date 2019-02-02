@@ -10,7 +10,12 @@ export default {
         } else {
           favourites.splice(favourites.indexOf(id), ~favourites.indexOf(id) ? 1 : 0)
         }
-        Cookie.set('favourites', favourites)
+        Cookie.set('favourites', favourites);
+        this.favouritesIds = [...favourites];
+        if (this.getFavourites && this.getFavourites.movies) {
+          console.log('f ', favourites)
+          this.filterMovies();
+        }
       },
       checkFavourite(id) {
         return !!this.favouritesIds.includes(id)

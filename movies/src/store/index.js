@@ -8,7 +8,7 @@ const store = new Vuex.Store({
   state: {
     popularMovies: [],
     popularSearch: [],
-    loggedIn: false,
+    currentUser: '',
     ax: axios.create({
       baseURL: 'https://api.themoviedb.org/3/movie/popular',
       timeout: 1000,
@@ -27,8 +27,8 @@ const store = new Vuex.Store({
       }
       return getId
     },
-    getLoggedIn({loggedIn}) {
-      return loggedIn
+    getCurrentUser({ currentUser}) {
+      return currentUser
     }
   },
   actions: {
@@ -55,8 +55,8 @@ const store = new Vuex.Store({
     setSearchMovies(state, payload) {
       state.popularSearch = [...payload]
     },
-    Login(state) {
-      state.loggedIn = !state.loggedIn;
+    Login(state, payload) {
+      state.currentUser = payload || '';
     }
   }
 })
