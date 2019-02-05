@@ -102,13 +102,7 @@ import firebase from 'firebase'
       this.$store.dispatch('fetchPopularMovies')
       firebase.auth().onAuthStateChanged(function(user) {
         Store.commit('Login', user.email)
-        console.log('asd', user)
       });
-      // this.firebaseSetPersistance();
-      if (Cookie.get('uid')) {
-        firebase.auth().signInWithCustomToken(Cookie.get('uid')).then(alert)
-        // console.log('c ', Cookie.get('uid'))
-      }
     }
   }
 </script>

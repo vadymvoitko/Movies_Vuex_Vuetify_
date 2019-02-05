@@ -3,7 +3,12 @@
     <div class="text-xs-center popular-pagination">
       <v-pagination v-model="page" :length="6"></v-pagination>
     </div>
-    <v-layout wrap row>
+      <MovieCard
+        :movies="getSixMovies"
+        :favouritesIds="favouritesIds"
+        @addToFavourites="addToFavourites($event.value, $event.id)"
+      />
+    <!-- <v-layout wrap row>
       <v-flex class="popular-card" xs3 offset-xs1 _highlight v-for="movie in getSixMovies" :key="movie.id">
         <v-card>
           <v-img class="white--text" height="200px" :src="imgSlug + movie.poster_path">
@@ -38,8 +43,7 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-    </v-layout>
-    {{ $_Cookie.get('favourites') }}
+    </v-layout> -->
   </v-container>
 </template>
 
@@ -48,7 +52,7 @@
     mapGetters
   } from 'vuex';
   import favourites from './mixins/favourites.js';
-  
+  import MovieCard from './MovieCard'
   
   export default {
     name: 'Popular',
@@ -67,6 +71,9 @@
           return ind >= (this.page - 1) * 6 && ind < this.page * 6
         })
       }
+    },
+    components: {
+      MovieCard
     },
     watch: {
       getPopularMovies() {

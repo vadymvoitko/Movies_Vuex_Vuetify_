@@ -1,26 +1,13 @@
 <template>
-<v-layout>
-  <v-flex xs8 offset-xs2>
-    <v-container>
-      <v-text-field
-        v-model="email"
-        label="E-mail"
-      ></v-text-field>
-      <v-text-field
-        v-model="password"
-        label="password"
-      ></v-text-field>
-      <v-btn @click="register">
-        Register
-      </v-btn>
-    </v-container>
-  </v-flex>
-</v-layout>
+  <AuthenticateForm
+    entity="register"
+    @register="register"
+  />
 </template>
 
 <script>
 import firebase from 'firebase'
-
+import AuthenticateForm from './AuthenticateForm'
 export default {
   name: 'register',
   data() {
@@ -29,11 +16,14 @@ export default {
       password: ''
     }
   },
+  components: {
+    AuthenticateForm
+  },
   methods: {
-    register() {
+    register({email, password}) {
       firebase
         .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
+        .createUserWithEmailAndPassword(email, password)
         .then(res => {
           this.$router.push('/login')
           })
@@ -43,7 +33,6 @@ export default {
     }
   },
   created() {
-    console.log(firebase.auth().currentUser)
   }
 }
 </script>
