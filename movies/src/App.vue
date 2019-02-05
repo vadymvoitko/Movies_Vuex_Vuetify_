@@ -83,16 +83,32 @@ import firebase from 'firebase'
       },
       logout() {
         firebase.auth().signOut().then(res => {
+          console.log('resss ', res)
           this.$router.push('/');
           this.$store.commit('Login', '');
         })
+      },
+      firebaseSetPersistance() {
+        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        .then(function(res) {
+          console.log('res ', firebase.auth().currentUser)
+        })
+        .catch(function(error) {
+        });
       }
     },
     created() {
+      const Store = this.$store;
       this.$store.dispatch('fetchPopularMovies')
       firebase.auth().onAuthStateChanged(function(user) {
-        console.log('user ', user)
+        Store.commit('Login', user.email)
+        console.log('asd', user)
       });
+      // this.firebaseSetPersistance();
+      if (Cookie.get('uid')) {
+        firebase.auth().signInWithCustomToken(Cookie.get('uid')).then(alert)
+        // console.log('c ', Cookie.get('uid'))
+      }
     }
   }
 </script>

@@ -1,5 +1,4 @@
 import firebase from 'firebase'
-console.log('firePlagin', firebase)
 const config = {
   apiKey: "AIzaSyBWHNLUVzDgWDxaO_-ps-d3Y5fEbasN5Hs",
   authDomain: "webseo28.firebaseapp.com",

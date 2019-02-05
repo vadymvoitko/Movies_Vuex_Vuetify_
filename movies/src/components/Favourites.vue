@@ -70,13 +70,10 @@ export default {
       getFavourites: {
         allMovies: [],
         get movies() {
-          console.log(this)
           return this.allMovies
         },
         set movies(val) {
-          console.log('val ', val)
           this.allMovies = [...val]
-          console.log('val2 ', this.allMovies)
         }
       },
       favouritesIds: [],
@@ -86,7 +83,6 @@ export default {
   },
   methods: {
     filterMovies() {
-      console.log('ff')
       this.getFavourites.movies = this.getPopularMovies.filter(item => this.favouritesIds.includes(item.id));
     }
   },

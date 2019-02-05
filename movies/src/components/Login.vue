@@ -36,6 +36,7 @@ export default {
       .signInWithEmailAndPassword(this.email, this.password)
       .then(res => {
           this.$store.commit('Login', firebase.auth().currentUser.email)
+          Cookie.set('uid', firebase.auth().currentUser.uid)
           // console.log(firebase.auth().currentUser.email)
         })
       .catch(function(error) {
@@ -44,9 +45,11 @@ export default {
     }
   },
   created() {
-    firebase.auth().onAuthStateChanged(function(user) {
-        console.log('user ', user)
-      });
+    // firebase.auth().onAuthStateChanged(function(user) {
+    //     firebase.admin.auth().revokeRefreshTokens(firebase.auth().currentUser.uid)
+    //     .then(console.log)
+    //     console.log('user ', user)
+    //   });
     // console.log(firebase.auth().currentUser)
   }
 }
