@@ -7,14 +7,13 @@ export default {
         if (typeof favourites !== 'object') {
           favourites = JSON.parse(favourites);
         }
-        const favouriteByUser = favourites[this.$store.getters.getUid] || [];
+        const favouriteByUser = favourites[uid] || [];
         if (event) {
           favouriteByUser && !~favouriteByUser.indexOf(id) && favouriteByUser.push(id)
         } else if (favouriteByUser) {
           favouriteByUser.splice(favouriteByUser.indexOf(id), ~favouriteByUser.indexOf(id) ? 1 : 0)
         }
-        favourites[this.$store.getters.getUid] = favouriteByUser;
-        console.log('12 ', favourites)
+        favourites[uid] = favouriteByUser;
         Cookie.set('favourites', favourites);
         this.favouritesIds = favouriteByUser ? [...favouriteByUser] : [];
         if (this.getFavourites && this.getFavourites.movies) {
@@ -22,7 +21,6 @@ export default {
         }
       },
       checkFavourite(id) {
-        console.log(this.favouritesIds)
         return this.favouritesIds && !!this.favouritesIds.includes(id)
       }
   }

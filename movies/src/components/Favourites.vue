@@ -56,11 +56,8 @@ export default {
   },
   created() {
     const uid = this.$store.getters.getUid;
-    console.log('2 ', JSON.parse((Cookie.get('favourites'))))
     this.favouritesIds = ( uid && Cookie.get('favourites') && JSON.parse(Cookie.get('favourites'))[uid]) || [];
-    console.log('123 ', this.favouritesIds)
     this.filterMovies();
-    // filter array of all movies and write it in getFavourites
   }
 }
 </script>
