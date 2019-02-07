@@ -1,24 +1,29 @@
 export default {
   methods: {
     addToFavourites(event, id) {
-        let favourites = Cookie.get('favourites') || [];
-        if (!Array.isArray(favourites)) {
+        const uid = this.$store.getters.getUid;
+        if (!uid) return;
+        let favourites = Cookie.get('favourites') || {};
+        if (typeof favourites !== 'object') {
           favourites = JSON.parse(favourites);
         }
+        const favouriteByUser = favourites[this.$store.getters.getUid] || [];
         if (event) {
-          !~favourites.indexOf(id) && favourites.push(id)
-        } else {
-          favourites.splice(favourites.indexOf(id), ~favourites.indexOf(id) ? 1 : 0)
+          favouriteByUser && !~favouriteByUser.indexOf(id) && favouriteByUser.push(id)
+        } else if (favouriteByUser) {
+          favouriteByUser.splice(favouriteByUser.indexOf(id), ~favouriteByUser.indexOf(id) ? 1 : 0)
         }
+        favourites[this.$store.getters.getUid] = favouriteByUser;
+        console.log('12 ', favourites)
         Cookie.set('favourites', favourites);
-        this.favouritesIds = [...favourites];
+        this.favouritesIds = favouriteByUser ? [...favouriteByUser] : [];
         if (this.getFavourites && this.getFavourites.movies) {
-          console.log('f ', favourites)
           this.filterMovies();
         }
       },
       checkFavourite(id) {
-        return !!this.favouritesIds.includes(id)
+        console.log(this.favouritesIds)
+        return this.favouritesIds && !!this.favouritesIds.includes(id)
       }
   }
 }

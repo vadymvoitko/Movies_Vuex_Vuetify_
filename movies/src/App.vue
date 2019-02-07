@@ -83,9 +83,9 @@ import firebase from 'firebase'
       },
       logout() {
         firebase.auth().signOut().then(res => {
-          console.log('resss ', res)
           this.$router.push('/');
           this.$store.commit('Login', '');
+          this.$store.commit('setUid', '');
         })
       },
       firebaseSetPersistance() {
@@ -101,7 +101,8 @@ import firebase from 'firebase'
       const Store = this.$store;
       this.$store.dispatch('fetchPopularMovies')
       firebase.auth().onAuthStateChanged(function(user) {
-        Store.commit('Login', user.email)
+        Store.commit('setUid', user && user.uid);
+        Store.commit('Login', user.email);
       });
     }
   }

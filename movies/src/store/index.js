@@ -15,7 +15,8 @@ const store = new Vuex.Store({
       params: {
         api_key: '777de1c0359913997a49b6a6fc4096fe'
       }
-    })
+    }),
+    uid: ''
   },
   getters: {
     getPopularMovies({popularSearch}) {
@@ -29,7 +30,10 @@ const store = new Vuex.Store({
     },
     getCurrentUser({ currentUser}) {
       return currentUser
-    }
+    },
+    getUid({uid}) {
+      return uid
+    } 
   },
   actions: {
     fetchPopularMovies ({ commit, state: {ax} }) {
@@ -57,6 +61,9 @@ const store = new Vuex.Store({
     },
     Login(state, payload) {
       state.currentUser = payload || '';
+    },
+    setUid(state, payload) {
+      state.uid = payload
     }
   }
 })
