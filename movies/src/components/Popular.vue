@@ -29,7 +29,7 @@
       }
     },
     computed: {
-      ...mapGetters(['getPopularMovies']),
+      ...mapGetters(['getPopularMovies', 'getUid']),
       getSixMovies() {
         return this.getPopularMovies.filter((el, ind) => {
           return ind >= (this.page - 1) * 6 && ind < this.page * 6
@@ -40,13 +40,14 @@
       MovieCard
     },
     watch: {
-      getPopularMovies() {
-        console.log('getterW ', this.getPopularMovies)
+      getUid() {
+        const uid = this.getUid;
+        this.favouritesIds = uid && Cookie.get('favourites') && JSON.parse(Cookie.get('favourites'))[uid];
       }
     },
     mixins: [favourites],
     created() {
-      const uid = this.$store.getters.getUid;
+      const uid = this.getUid;
       this.favouritesIds = uid && Cookie.get('favourites') && JSON.parse(Cookie.get('favourites'))[uid];
     }
   }
