@@ -17,6 +17,7 @@
   } from 'vuex';
   import favourites from './mixins/favourites.js';
   import MovieCard from './MovieCard'
+  import axios from 'axios'
   
   export default {
     name: 'Popular',
@@ -49,6 +50,7 @@
     created() {
       const uid = this.getUid;
       this.favouritesIds = uid && Cookie.get('favourites') && JSON.parse(Cookie.get('favourites'))[uid];
+      axios.get(`https://api.themoviedb.org/3/movie/450465/similar?api_key=777de1c0359913997a49b6a6fc4096fe&language=en-US&page=1`).then(console.log)
     }
   }
 </script>
